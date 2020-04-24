@@ -38,6 +38,11 @@
                   />
 
                   <v-text-field
+                    v-model="pass"
+                    :error-messages="passErrors"
+                    required
+                    @input="$v.pass.$touch()"
+                    @blur="$v.pass.$touch()"
                     id="password"
                     label="Password"
                     name="password"
@@ -68,16 +73,21 @@ export default {
     },
     mixins: [validationMixin],
     validations: {
-        user: { required }
+        user: { required },
+        pass: { required }
     },
     data() {
         return {
-            user: ''
+            user: '',
+            pass: ''
         }
     },
     methods: {
         login() {
             this.$v.$touch()
+            if (!this.$v.$invalid) {
+                this.$router.push({ path: 'welcome'})
+            }
             console.log('Login')
         }
     },
@@ -88,10 +98,12 @@ export default {
             !this.$v.user.required && errors.push('User is required')
             return errors;
         },
-        /* passErrors() {
+        passErrors() {
             const errors = []
-            
-        } */
+            if (!this.$v.pass.$dirty) return errors
+            !this.$v.pass.required && errors.push('Password is required')
+            return errors;
+        }
     }
 }
 </script>
