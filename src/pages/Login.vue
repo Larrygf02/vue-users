@@ -66,6 +66,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import { mapActions } from 'vuex'
 export default {
     name: 'Login',
     props: {
@@ -83,21 +84,26 @@ export default {
         }
     },
     methods: {
+        ...mapActions('user',['setUser']),
         login() {
+            let user = {
+              user: this.user,
+              login: true
+            }
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.setUser()
+                this.setUser(user)
                 this.$router.push({ path: 'welcome'})
             }
             console.log('Login')
         },
-        setUser() {
+        /* setUser() {
           let user = {
             user: this.user,
             login: true
           }
           this.$store.dispatch('user/setUser', user)
-        }
+        } */
     },
     computed: {
         userErrors() {
