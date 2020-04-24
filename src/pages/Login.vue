@@ -56,7 +56,7 @@
                   <v-text-field
                     label="Login"
                     name="login"
-                    prepend-icon="place"
+                    prepend-icon="mdi-account"
                     type="text"
                   />
 
@@ -64,7 +64,7 @@
                     id="password"
                     label="Password"
                     name="password"
-                    prepend-icon="lock"
+                    prepend-icon="mdi-lock"
                     type="password"
                   />
                 </v-form>
