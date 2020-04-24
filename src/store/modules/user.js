@@ -3,10 +3,10 @@ const state = {
 }
 
 // getters
-/* const getters = {
-    isLogin: (state) => state.user.login
+const getters = {
+    isLogin: (state) => (state.user !== null)
 }
- */
+
 // actions
 const actions = {
     setUser ({ commit, state }, user) { 
@@ -25,6 +25,7 @@ const mutations = {
 export default {
     state,
     actions,
+    getters,
     mutations,
     namespaced: true
 }

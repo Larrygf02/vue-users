@@ -66,7 +66,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'Login',
     props: {
@@ -97,15 +97,9 @@ export default {
             }
             console.log('Login')
         },
-        /* setUser() {
-          let user = {
-            user: this.user,
-            login: true
-          }
-          this.$store.dispatch('user/setUser', user)
-        } */
     },
     computed: {
+        ...mapGetters('user',['isLogin']),
         userErrors() {
             const errors = []
             if (!this.$v.user.$dirty) return errors
