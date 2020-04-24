@@ -86,9 +86,17 @@ export default {
         login() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
+                this.setUser()
                 this.$router.push({ path: 'welcome'})
             }
             console.log('Login')
+        },
+        setUser() {
+          let user = {
+            user: this.user,
+            login: true
+          }
+          this.$store.dispatch('user/setUser', user)
         }
     },
     computed: {
