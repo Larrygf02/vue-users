@@ -2,12 +2,16 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './pages/Login'
 import Welcome from './pages/Welcome'
+import Users from './pages/Users'
+import Products from './pages/Products'
 import store from './store';
 Vue.use(Router)
 
 const routes = [
     { path: '/login', component: Login},
-    { path: '/welcome', component: Welcome}
+    { path: '/welcome', component: Welcome},
+    { path: '/users', component: Users},
+    { path: '/products', component: Products}
 ]
 
 const router = new Router({
