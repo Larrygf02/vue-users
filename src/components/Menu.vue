@@ -1,6 +1,6 @@
 <template>
-    <v-row :align="align">
-        <v-col cols="2">
+    <v-row>
+        <v-col cols="2" sm="4">
             <v-card class="mx-auto" width="300">
             <v-list>
                 <v-list-item link>
@@ -56,7 +56,7 @@
             </v-list>
             </v-card>
         </v-col>
-        <v-col cols="10">
+        <v-col cols="10" sm="8">
             <slot name="content"></slot>
         </v-col>
     </v-row>
