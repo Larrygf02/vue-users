@@ -1,5 +1,5 @@
 const state = {
-    user: null
+    user: (JSON.parse(localStorage.user)) || null
 }
 
 // getters
@@ -9,10 +9,11 @@ const getters = {
 
 // actions
 const actions = {
-    setUser ({ commit, state }, user) { 
+    setUser ({ commit }, user) { 
         console.log("state", state)
         commit('setUser', user)
-    }
+        localStorage.user = JSON.stringify(user)
+    },
 }
 
 // mutations

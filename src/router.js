@@ -17,11 +17,15 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     const { path } = to;
+    let isLogin = store.getters["user/isLogin"]
     if (path == '/login') {
-      next();
+      if (isLogin) {
+        router.push({path: '/welcome'})
+      }else{
+        next();
+      }
     } else {
-      console.log(store);
-      if (store.getters["user/isLogin"]) {
+      if (isLogin) {
         next();
       } else {
         console.log('No tiene permiso');
