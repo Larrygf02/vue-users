@@ -26,11 +26,11 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                    v-model="user"
+                    v-model="username"
                     :error-messages="userErrors"
                     required
-                    @input="$v.user.$touch()"
-                    @blur="$v.user.$touch()"
+                    @input="$v.username.$touch()"
+                    @blur="$v.username.$touch()"
                     label="User"
                     name="user"
                     prepend-icon="mdi-account"
@@ -38,11 +38,11 @@
                   />
 
                   <v-text-field
-                    v-model="pass"
+                    v-model="password"
                     :error-messages="passErrors"
                     required
-                    @input="$v.pass.$touch()"
-                    @blur="$v.pass.$touch()"
+                    @input="$v.password.$touch()"
+                    @blur="$v.password.$touch()"
                     id="password"
                     label="Password"
                     name="password"
@@ -74,21 +74,21 @@ export default {
     },
     mixins: [validationMixin],
     validations: {
-        user: { required },
-        pass: { required }
+        username: { required },
+        password: { required }
     },
     data() {
         return {
-            user: '',
-            pass: ''
+            username: '',
+            password: ''
         }
     },
     methods: {
         ...mapActions('user',['setUser']),
         login() {
             let user = {
-              user: this.user,
-              login: true
+              username: this.username,
+              password: this.password
             }
             this.$v.$touch()
             if (!this.$v.$invalid) {
@@ -102,14 +102,14 @@ export default {
         ...mapGetters('user',['isLogin']),
         userErrors() {
             const errors = []
-            if (!this.$v.user.$dirty) return errors
-            !this.$v.user.required && errors.push('User is required')
+            if (!this.$v.username.$dirty) return errors
+            !this.$v.username.required && errors.push('User is required')
             return errors;
         },
         passErrors() {
             const errors = []
-            if (!this.$v.pass.$dirty) return errors
-            !this.$v.pass.required && errors.push('Password is required')
+            if (!this.$v.password.$dirty) return errors
+            !this.$v.password.required && errors.push('Password is required')
             return errors;
         }
     }

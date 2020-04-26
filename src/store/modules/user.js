@@ -1,5 +1,7 @@
+import axios from 'axios'
 const state = {
-    user: (JSON.parse(localStorage.user)) || null
+    user: (localStorage.user) ? JSON.parse(localStorage.user): null,
+    login: false
 }
 
 // getters
@@ -9,10 +11,15 @@ const getters = {
 
 // actions
 const actions = {
-    setUser ({ commit }, user) { 
-        console.log("state", state)
-        commit('setUser', user)
-        localStorage.user = JSON.stringify(user)
+    async setUser ({ commit }, user) {
+        const { data } = await axios.post('http://localhost:4000/login', user)
+        if (data.status) {            
+            commit('setUser', user)
+            commit('loginSucess')
+            localStorage.user = JSON.stringify(user)
+        }else{
+            commit('loginFailed')
+        }
     },
 }
 
@@ -20,6 +27,14 @@ const actions = {
 const mutations = {
     setUser (state, user) {
         state.user = user;
+        state.login = true
+    },
+    loginSuccess () {
+        console.log('Login Success')
+    },
+    loginFailed (state) {
+        state.login = false
+        console.log('Login Failed')
     }
 }
 
