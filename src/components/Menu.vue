@@ -65,19 +65,30 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapGetters } from 'vuex' 
   export default {
     data: () => ({
       admins: [
         ['Management', 'mdi-account-multiple-outline'],
         ['Settings', 'mdi-settings'],
       ],
-      cruds: [
-        ['Create', 'add'],
-        ['Read', 'insert_drive_file'],
-        ['Update', 'update'],
-        ['Delete', 'delete'],
-      ],
       align: 'center'
     }),
+    mounted() {
+        this.getPermissions()
+    },
+    methods: {
+        async getPermissions() {
+            let user_id = this.getUserId
+            console.log(user_id)
+            const { data } = await axios.get(`http://localhost:4000/permissions/${user_id}`)
+            console.log(data)
+        }
+    },
+    computed: {
+        ...mapGetters('user',['getUserId'])
+    }
+
   }
 </script>

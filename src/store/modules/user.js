@@ -6,7 +6,8 @@ const state = {
 
 // getters
 const getters = {
-    isLogin: (state) => (state.user !== null)
+    isLogin: (state) => (state.user !== null),
+    getUserId: (state) => state.user.id
 }
 
 // actions
@@ -16,9 +17,9 @@ const actions = {
             axios.post('http://localhost:4000/login', user)
                 .then(({data}) => {
                     if (data.status) {            
-                        commit('setUser', user)
+                        commit('setUser', data.data)
                         commit('loginSuccess')
-                        localStorage.user = JSON.stringify(user)
+                        localStorage.user = JSON.stringify(data.data)
                         resolve(true)
                     }else{
                         commit('loginFailed')
