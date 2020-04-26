@@ -9,14 +9,14 @@
                     </v-list-item-icon>
                         <v-list-item-title>Home</v-list-item-title>
                 </v-list-item>
-                <v-list-item link to="/users">
+                <v-list-item link to="/users" v-if="can('user')">
                     <v-list-item-icon>
                         <v-icon>mdi-account-circle</v-icon>
                     </v-list-item-icon>
                     <v-list-item-title>Users</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item link to="/products">
+                <v-list-item link to="/products" v-if="can('product')">
                     <v-list-item-icon>
                         <v-icon>mdi-shopping</v-icon>
                     </v-list-item-icon>
@@ -73,7 +73,8 @@ import { mapGetters } from 'vuex'
         ['Management', 'mdi-account-multiple-outline'],
         ['Settings', 'mdi-settings'],
       ],
-      align: 'center'
+      align: 'center',
+      permissions: []
     }),
     mounted() {
         this.getPermissions()
@@ -81,9 +82,16 @@ import { mapGetters } from 'vuex'
     methods: {
         async getPermissions() {
             let user_id = this.getUserId
-            console.log(user_id)
             const { data } = await axios.get(`http://localhost:4000/permissions/${user_id}`)
-            console.log(data)
+            this.permissions = data.data
+        },
+        can(name) {
+            if (this.permissions.length === 0) {
+                return false
+            }else{
+                let names = this.permissions.map(permission => permission.name)
+                return names.includes(name)
+            }
         }
     },
     computed: {
