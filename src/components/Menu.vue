@@ -22,7 +22,9 @@
                     </v-list-item-icon>
                     <v-list-item-title>Products</v-list-item-title>
                 </v-list-item>
-
+                <div class="pa-2">
+                    <v-btn block @click="logout()">Logout</v-btn>
+                </div>
                 <!-- <v-list-group prepend-icon="mdi-account-circle" value="true">
                     <template v-slot:activator>
                         <v-list-item-title>Users</v-list-item-title>
@@ -66,7 +68,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex' 
+import { mapGetters, mapActions } from 'vuex' 
   export default {
     data: () => ({
       admins: [
@@ -80,12 +82,15 @@ import { mapGetters } from 'vuex'
         this.getPermissions()
     },
     methods: {
+        ...mapActions('user',['logout']),
         async getPermissions() {
             if (localStorage.permissions) {
-                this.permissions = JSON.parse(localStorage.permissions)
+                this.permissions = JSON.parse(localStorage.permissions) || []
             }else {                
                 let user_id = this.getUserId
+                console.log('UserID', user_id)
                 const { data } = await axios.get(`http://localhost:4000/permissions/${user_id}`)
+                console.log(data)
                 this.permissions = data.data
                 localStorage.permissions = JSON.stringify(data.data)
             }

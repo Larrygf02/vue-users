@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../../router'
 const state = {
     user: (localStorage.user) ? JSON.parse(localStorage.user): null,
     login: false
@@ -29,6 +30,12 @@ const actions = {
                 .catch(error => reject(error))
         })
     },
+    logout({commit}) {
+        commit('logoutSuccess')
+        localStorage.removeItem('user')
+        localStorage.removeItem('permissions')
+        router.push({path: 'login'})
+    }
 }
 
 // mutations
@@ -43,6 +50,10 @@ const mutations = {
     loginFailed (state) {
         state.login = false
         console.log('Login Failed')
+    },
+    logoutSuccess (state) {
+        state.user = null
+        state.login = false
     }
 }
 
