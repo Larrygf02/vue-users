@@ -12,14 +12,21 @@ const getters = {
 // actions
 const actions = {
     async setUser ({ commit }, user) {
-        const { data } = await axios.post('http://localhost:4000/login', user)
-        if (data.status) {            
-            commit('setUser', user)
-            commit('loginSucess')
-            localStorage.user = JSON.stringify(user)
-        }else{
-            commit('loginFailed')
-        }
+        return new Promise((resolve, reject) => {
+            axios.post('http://localhost:4000/login', user)
+                .then(({data}) => {
+                    if (data.status) {            
+                        commit('setUser', user)
+                        commit('loginSuccess')
+                        localStorage.user = JSON.stringify(user)
+                        resolve(true)
+                    }else{
+                        commit('loginFailed')
+                        resolve(false)
+                    }
+                })
+                .catch(error => reject(error))
+        })
     },
 }
 

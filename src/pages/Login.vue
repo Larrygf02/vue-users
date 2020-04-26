@@ -92,8 +92,11 @@ export default {
             }
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.setUser(user)
-                this.$router.push({ path: 'welcome'})
+                this.setUser(user).then(isLogin => {
+                  if (isLogin) {
+                    this.$router.push({ path: 'welcome'})
+                  }
+                })
             }
             console.log('Login')
         },
