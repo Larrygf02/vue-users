@@ -81,9 +81,14 @@ import { mapGetters } from 'vuex'
     },
     methods: {
         async getPermissions() {
-            let user_id = this.getUserId
-            const { data } = await axios.get(`http://localhost:4000/permissions/${user_id}`)
-            this.permissions = data.data
+            if (localStorage.permissions) {
+                this.permissions = JSON.parse(localStorage.permissions)
+            }else {                
+                let user_id = this.getUserId
+                const { data } = await axios.get(`http://localhost:4000/permissions/${user_id}`)
+                this.permissions = data.data
+                localStorage.permissions = JSON.stringify(data.data)
+            }
         },
         can(name) {
             if (this.permissions.length === 0) {
